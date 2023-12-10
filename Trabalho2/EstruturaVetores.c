@@ -4,9 +4,9 @@
 
 #include "EstruturaVetores.h"
 
-int* vetorPrincipal[TAM];
-int tam[TAM];
-int ocupado[TAM]= {0,0,0,0,0,0,0,0,0,0};
+int* vetorPrincipal[TAM]; //vetor de vetores, cada posição vai apontar para um vetor diferente, assim, criando uma matriz[x][y]
+int tam[TAM]; //tamanho alocado para cada vetor
+int ocupado[TAM]= {0,0,0,0,0,0,0,0,0,0}; //quantidade de espaços ocupados para cada vetor
 
 void bubbleSort(int vetor[], int size) {
     int i, j, aux;
