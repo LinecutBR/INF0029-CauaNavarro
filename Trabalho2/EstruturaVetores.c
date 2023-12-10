@@ -34,8 +34,6 @@ Rertono (int)
 */
 int criarEstruturaAuxiliar(int posicao, int tamanho)
 {
-
-    int retorno = 0;
     // a posicao pode já existir estrutura auxiliar
     if(vetorPrincipal[posicao-1]!=NULL){
     return JA_TEM_ESTRUTURA_AUXILIAR;
@@ -316,13 +314,13 @@ int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho)
   if(novoTamanho<1){
     return NOVO_TAMANHO_INVALIDO;
   }
-  vetorPrincipal[posicao-1]=malloc(novoTamanho*sizeof(int));
-  tam[posicao-1]=novoTamanho;
-  
-    if(!vetorPrincipal[posicao-1]){
-    return SEM_ESPACO_DE_MEMORIA;
-    }
+ int* vetorAuxiliar =realloc(vetorPrincipal[posicao-1], novoTamanho*sizeof(int));
+  if (vetorAuxiliar == NULL) {
+      return SEM_ESPACO_DE_MEMORIA;
+  }
 
+  vetorPrincipal[posicao - 1] = vetorAuxiliar;
+  tam[posicao - 1] = novoTamanho;
   return SUCESSO;
 }
 
@@ -419,14 +417,14 @@ Retorno
 void destruirListaEncadeadaComCabecote(No **inicio)
 {
   No* current = *inicio;
-
+  No* aux;
   while(current->prox != NULL){
-    No* aux = (No*)malloc (sizeof(No));
     aux = current->prox;
     free(current);
     current = aux;
   }
-
+  free(aux);
+  free(inicio);
   *inicio = NULL;
 }
 
@@ -438,7 +436,7 @@ Objetivo: inicializa o programa. deve ser chamado ao inicio do programa
 void inicializar()
 {
   for(int i = 0;	i < TAM ;	i++){
-    vetorPrincipal[i]=	NULL;
+    vetorPrincipal[i] =	NULL;
     tam[i]=0;
     ocupado[i]=0;
   }
