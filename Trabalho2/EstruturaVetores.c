@@ -303,24 +303,26 @@ Rertono (int)
 */
 int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho)
 {
-
-  novoTamanho=novoTamanho+tam[posicao-1];
   if (posicao<1||posicao>10){
     return POSICAO_INVALIDA;
   }
+  novoTamanho=novoTamanho+tam[posicao-1];
+
   if (vetorPrincipal[posicao-1]==NULL){
     return SEM_ESTRUTURA_AUXILIAR;
   }
   if(novoTamanho<1){
     return NOVO_TAMANHO_INVALIDO;
   }
- int* vetorAuxiliar =realloc(vetorPrincipal[posicao-1], novoTamanho*sizeof(int));
-  if (vetorAuxiliar == NULL) {
+ tam[posicao - 1] = novoTamanho;
+ vetorPrincipal[posicao-1] =realloc(vetorPrincipal[posicao-1], novoTamanho*sizeof(int));
+  if (!vetorPrincipal[posicao-1]) {
       return SEM_ESPACO_DE_MEMORIA;
   }
+  if(ocupado[posicao-1]>tam[posicao-1]){
+    ocupado[posicao-1]=tam[posicao-1];
+  }
 
-  vetorPrincipal[posicao - 1] = vetorAuxiliar;
-  tam[posicao - 1] = novoTamanho;
   return SUCESSO;
 }
 
@@ -415,14 +417,12 @@ Retorno
 void destruirListaEncadeadaComCabecote(No **inicio)
 {
   No* current = *inicio;
-  No* aux;
+  No* aux= (No*)malloc (sizeof(No));
   while(current->prox != NULL){
     aux = current->prox;
     free(current);
     current = aux;
   }
-  free(aux);
-  free(inicio);
   *inicio = NULL;
 }
 
