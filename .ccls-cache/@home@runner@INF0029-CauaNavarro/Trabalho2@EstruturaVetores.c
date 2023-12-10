@@ -34,20 +34,21 @@ Rertono (int)
 */
 int criarEstruturaAuxiliar(int posicao, int tamanho)
 {
+    // se posição é um valor válido {entre 1 e 10}
+     if (posicao < 1 || posicao > 10)
+     {
+      return POSICAO_INVALIDA;
+     }
+      // o tamanho nao pode ser menor que 1
+     if(tamanho < 1)
+     {
+      return TAMANHO_INVALIDO;
+     }
     // a posicao pode já existir estrutura auxiliar
     if(vetorPrincipal[posicao-1]!=NULL){
     return JA_TEM_ESTRUTURA_AUXILIAR;
     }
-    // se posição é um valor válido {entre 1 e 10}
-   else if (posicao < 1 || posicao > 10)
-   {
-    return POSICAO_INVALIDA;
-   }
-    // o tamanho nao pode ser menor que 1
-   else if(tamanho < 1)
-   {
-    return TAMANHO_INVALIDO;
-   }
+
   vetorPrincipal[posicao-1]=malloc(tamanho*sizeof(int));
   tam[posicao-1]=tamanho;
     // o tamanho ser muito grande
@@ -109,15 +110,16 @@ Rertono (int)
 */
 int excluirNumeroDoFinaldaEstrutura(int posicao)
 {
+    if (posicao<1||posicao>10){
+        return POSICAO_INVALIDA;
+    }
     if (vetorPrincipal[posicao-1]==NULL){
       return SEM_ESTRUTURA_AUXILIAR;
     }
     if (ocupado[posicao-1]==0){
       return ESTRUTURA_AUXILIAR_VAZIA;
     }
-    if (posicao<1||posicao>10){
-        return POSICAO_INVALIDA;
-    }
+
     ocupado[posicao-1]--;
     return SUCESSO;
 }
@@ -138,15 +140,14 @@ Rertono (int)
 int excluirNumeroEspecificoDeEstrutura(int posicao, int valor)
 {
   int temp = -1;
-  
+  if (posicao<1||posicao>10)
+    return POSICAO_INVALIDA;
   if (vetorPrincipal[posicao-1]==NULL){
     return SEM_ESTRUTURA_AUXILIAR;
   }
   if (ocupado[posicao-1]==0){
     return ESTRUTURA_AUXILIAR_VAZIA;
   }
-  if (posicao<1||posicao>10)
-      return POSICAO_INVALIDA;
 
   for(int i=0;i<ocupado[posicao-1];i++){
     if(vetorPrincipal[posicao-1][i]==valor){
@@ -211,12 +212,12 @@ Rertono (int)
 */
 int getDadosOrdenadosEstruturaAuxiliar(int posicao, int vetorAux[])
 {
-  if (vetorPrincipal[posicao-1]==NULL){
-    return SEM_ESTRUTURA_AUXILIAR;
-  }
 
-  else if (posicao<1||posicao>10){
+  if (posicao<1||posicao>10){
     return POSICAO_INVALIDA;
+  }
+  else if (vetorPrincipal[posicao-1]==NULL){
+    return SEM_ESTRUTURA_AUXILIAR;
   }
   else{
   for(int i=0;i<ocupado[posicao-1];i++){
@@ -304,12 +305,11 @@ int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho)
 {
 
   novoTamanho=novoTamanho+tam[posicao-1];
-  if (vetorPrincipal[posicao-1]==NULL){
-    return SEM_ESTRUTURA_AUXILIAR;
-  }
-
   if (posicao<1||posicao>10){
     return POSICAO_INVALIDA;
+  }
+  if (vetorPrincipal[posicao-1]==NULL){
+    return SEM_ESTRUTURA_AUXILIAR;
   }
   if(novoTamanho<1){
     return NOVO_TAMANHO_INVALIDO;
@@ -335,13 +335,11 @@ Retorno (int)
 */
 int getQuantidadeElementosEstruturaAuxiliar(int posicao)
 {
-
-  if (vetorPrincipal[posicao-1]==NULL){
-    return SEM_ESTRUTURA_AUXILIAR;
-  }
-
   if (posicao<1||posicao>10){
     return POSICAO_INVALIDA;
+  }
+  if (vetorPrincipal[posicao-1]==NULL){
+    return SEM_ESTRUTURA_AUXILIAR;
   }
   if(ocupado[posicao-1]==0){
     return ESTRUTURA_AUXILIAR_VAZIA;
